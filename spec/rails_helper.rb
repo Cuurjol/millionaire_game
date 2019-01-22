@@ -69,7 +69,14 @@ RSpec.configure do |config|
   # Подключаем девайзовые классы для использвоания в тестах
   # https://github.com/plataformatec/devise#test-helpers
   # https://github.com/plataformatec/devise/issues/4133
+  # config.include Devise::TestHelpers, type: :controller
+  # config.include Devise::TestHelpers, type: :view
 
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :view
+  # DEPRECATION WARNING: [Devise] including `Devise::TestHelpers` is deprecated and will be removed from Devise.
+  # For controller tests, please include `Devise::Test::ControllerHelpers` instead.
+  #
+  # Для ruby on rails 5 версии и выше нужно теперь вот так делать:
+  # https://stackoverflow.com/questions/38486080/rails-5-controller-test-changes-devisetesthelpers-is-deprecated-and-will-b
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
 end
