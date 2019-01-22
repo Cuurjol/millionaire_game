@@ -5,7 +5,7 @@ class GameQuestion < ApplicationRecord
   delegate :text, :level, to: :question, allow_nil: true
 
   validates :game, :question, presence: true
-  validates :a, :b, :c, :d, inclusion: {in: 1..4}
+  validates :a, :b, :c, :d, inclusion: { in: 1..4 }
 
   def variants
     {
@@ -21,7 +21,7 @@ class GameQuestion < ApplicationRecord
   end
 
   def correct_answer_key
-    {a => 'a', b => 'b', c => 'c', d => 'd'}[1]
+    { a => 'a', b => 'b', c => 'c', d => 'd' }[1]
   end
 
   def correct_answer

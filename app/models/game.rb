@@ -8,7 +8,7 @@ class Game < ApplicationRecord
   has_many :game_questions, dependent: :destroy
 
   validates :user, presence: true
-  validates :current_level, numericality: {only_integer: true}, allow_nil: false
+  validates :current_level, numericality: { only_integer: true }, allow_nil: false
   validates :prize, presence: true, numericality: {
       greater_than_or_equal_to: 0, less_than_or_equal_to: PRIZES.last
   }
@@ -20,7 +20,7 @@ class Game < ApplicationRecord
       game = create!(user: user)
 
       Question::QUESTION_LEVELS.each do |level|
-        question = Question.where(level: level).order('RANDOM()').first
+        question = Question.where(level: level).order(Arel.sql('RANDOM()')).first
         answers = [1, 2, 3, 4].shuffle
         game.game_questions.create!(
           question: question,
