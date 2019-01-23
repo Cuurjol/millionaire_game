@@ -81,7 +81,7 @@ RSpec.describe GamesController, type: :controller do
       expect(game.finished?).to be_truthy
       expect(game.current_level).to eq(14)
       expect(game.status).to eq(:fail)
-      expect(game.prize).to eq(Game::PRIZES[Game::FIREPROOF_LEVELS[1]])
+      expect(game.prize).to eq(32_000)
       expect(response).to redirect_to(user_path(user))
       expect(flash[:alert]).to be
     end
