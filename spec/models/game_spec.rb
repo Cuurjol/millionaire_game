@@ -47,14 +47,20 @@ RSpec.describe Game, type: :model do
       expect(user.balance).to eq prize
     end
 
-    it '.current_game_question' do
+    it '.current_game_question for first question' do
       expect(game_with_questions.current_game_question).to eq(game_with_questions.game_questions[0])
+    end
+
+    it '.current_game_question for tenth question' do
       game_with_questions.current_level = 10
       expect(game_with_questions.current_game_question).to eq(game_with_questions.game_questions[10])
     end
 
-    it '.previous_level' do
+    it '.previous_level for current_level = 0' do
       expect(game_with_questions.previous_level).to eq(-1)
+    end
+
+    it '.previous_level for current_level = 10' do
       game_with_questions.current_level = 10
       expect(game_with_questions.previous_level).to eq(9)
     end
