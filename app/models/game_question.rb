@@ -1,3 +1,5 @@
+require 'game_help_generator'
+
 class GameQuestion < ApplicationRecord
   belongs_to :game
   belongs_to :question
@@ -6,6 +8,20 @@ class GameQuestion < ApplicationRecord
 
   validates :game, :question, presence: true
   validates :a, :b, :c, :d, inclusion: { in: 1..4 }
+
+
+  # help_hash у нас имеет такой формат:
+  # {
+  #   # При использовании подсказски остались варианты a и b
+  #   fifty_fifty: ['a', 'b'],
+  #
+  #   # Распределение голосов по вариантам a, b, c, d
+  #   audience_help: {'a' => 42, 'c' => 37 ...},
+  #
+  #   # Друг решил, что правильный ответ А (просто пишем текстом)
+  #   friend_call: 'Василий Петрович считает, что правильный ответ A'
+  # }
+  serialize :help_hash, Hash
 
   def variants
     {
@@ -26,5 +42,33 @@ class GameQuestion < ApplicationRecord
 
   def correct_answer
     variants[correct_answer_key]
+  end
+
+  def add_fifty_fifty
+    help_hash[:fifty_fifty] = [
+        correct_answer_key,
+        (%w(a b c d) - [correct_answer_key]).sample
+    ]
+    save
+  end
+
+  def add_audience_help
+    keys_to_use = keys_to_use_in_help
+    help_hash[:audience_help] = GameHelpGenerator.audience_distribution(keys_to_use, correct_answer_key)
+    save
+  end
+
+  def add_friend_call
+    keys_to_use = keys_to_use_in_help
+    help_hash[:friend_call] = GameHelpGenerator.friend_call(keys_to_use, correct_answer_key)
+    save
+  end
+
+  private
+
+  def keys_to_use_in_help
+    keys_to_use = variants.keys
+    keys_to_use = help_hash[:fifty_fifty] if help_hash.has_key?(:fifty_fifty)
+    keys_to_use
   end
 end

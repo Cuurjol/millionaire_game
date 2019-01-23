@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :games, only: [:create, :show] do
     put 'answer', on: :member
     put 'take_money', on: :member
+    put 'help', on: :member # помощь зала
   end
 end

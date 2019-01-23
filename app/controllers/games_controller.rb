@@ -41,8 +41,19 @@ class GamesController < ApplicationController
     @game.take_money!
 
     redirect_to(user_path(current_user), flash: {
-      warning: I18n.t('controllers.games.game_finished', prize: view_context.number_to_currency(@game.prize))
-    })
+                  warning: I18n.t('controllers.games.game_finished',
+                                  prize: view_context.number_to_currency(@game.prize))
+                })
+  end
+
+  def help
+    msg = if @game.use_help(params[:help_type].to_sym)
+            { flash: { info: I18n.t('controllers.games.help_used') } }
+          else
+            { alert: I18n.t('controllers.games.help_not_used') }
+          end
+
+    redirect_to(game_path(@game), msg)
   end
 
   private
