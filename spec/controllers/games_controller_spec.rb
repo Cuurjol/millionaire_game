@@ -156,14 +156,14 @@ RSpec.describe GamesController, type: :controller do
       expect(game_w_questions.current_game_question.help_hash[:friend_call]).not_to be
       expect(game_w_questions.friend_call_used).to be_falsey
 
-      allow(GameHelpGenerator).to receive(:friend_call).and_return('Господин Никто считает, что это А')
+      allow(GameHelpGenerator).to receive(:friend_call).and_return('Господин Никто считает, что это вариант А')
       put(:help, params: { id: game_w_questions.id, help_type: :friend_call })
       game = assigns(:game)
 
       expect(game.finished?).to be_falsey
       expect(game.friend_call_used).to be_truthy
       expect(game.current_game_question.help_hash[:friend_call]).to be
-      expect(game.current_game_question.help_hash[:friend_call]).to eq('Господин Никто считает, что это А')
+      expect(game.current_game_question.help_hash[:friend_call]).to eq('Господин Никто считает, что это вариант А')
       expect(response).to redirect_to(game_path(game))
     end
   end
