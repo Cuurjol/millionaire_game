@@ -30,10 +30,18 @@ class GamesController < ApplicationController
       )
     end
 
-    if @game.finished?
-      redirect_to(user_path(current_user))
-    else
-      redirect_to(game_path(@game))
+    respond_to do |format|
+      format.html do
+        if @answer_is_correct && !@game.finished?
+          redirect_to(game_path(@game))
+        else
+          redirect_to(user_path(current_user))
+        end
+      end
+
+      # <controller>/<action>.<format>.erb
+      # games/answer.js.erb
+      format.js {}
     end
   end
 
