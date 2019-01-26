@@ -79,4 +79,9 @@ RSpec.configure do |config|
   # https://stackoverflow.com/questions/38486080/rails-5-controller-test-changes-devisetesthelpers-is-deprecated-and-will-b
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+
+  config.include Warden::Test::Helpers, type: :feature
 end
+
+# Это нужно, чтобы капибара искала стили и js в правильном месте
+Capybara.asset_host = "http://localhost:3000"
