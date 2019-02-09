@@ -1,4 +1,57 @@
 ru:
+  activerecord:
+    models:
+      game:
+        one: 'Игра'
+        other: 'Игры'
+      game_question:
+        one: 'Игровой вопрос'
+        other: 'Игровые вопросы'
+      question:
+        one: 'Вопрос'
+        other: 'Вопросы'
+        many: '%{count} Вопросов'
+      user:
+        one: 'Пользователь'
+        other: 'Пользователи'
+
+    attributes:
+      game:
+        user: 'Пользователь'
+        finished_at: 'Дата завершения'
+        current_level: 'Текущий уровень'
+        is_failed: 'Провалена'
+        prize: 'Сумма'
+        created_at: 'Дата создания'
+        updated_at: 'Дата обновления'
+        fifty_fifty_used: '50/50'
+        audience_help_used: 'Помощь зала'
+        friend_call_used: 'Звонок другу'
+      game_question:
+        game_id: 'Игра'
+        question_id: 'Вопрос'
+        a: 'A'
+        b: 'B'
+        c: 'C'
+        d: 'D'
+        created_at: 'Дата создания'
+        updated_at: 'Дата обновления'
+        help_hash: 'Help_hash'
+      question:
+        level: 'Уровень'
+        text: 'Текст'
+        answer1: 'Ответ 1'
+        answer2: 'Ответ 2'
+        answer3: 'Ответ 3'
+        answer4: 'Ответ 4'
+        created_at: 'Дата создания'
+        updated_at: 'Дата обновления'
+      user:
+        name: 'Имя'
+        email: 'Email'
+        is_admin: 'Админ'
+        balance: 'Баланс'
+
   game_help:
     friends:
       - "Жора"

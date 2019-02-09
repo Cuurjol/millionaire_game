@@ -44,10 +44,16 @@ class GameQuestion < ApplicationRecord
     variants[correct_answer_key]
   end
 
+  def apply_help!(help_type)
+    add_fifty_fifty if help_type.to_sym == :fifty_fifty
+    add_audience_help if help_type.to_sym == :audience_help
+    add_friend_call if help_type.to_sym == :friend_call
+  end
+
   def add_fifty_fifty
     help_hash[:fifty_fifty] = [
         correct_answer_key,
-        (%w(a b c d) - [correct_answer_key]).sample
+        (%w[a b c d] - [correct_answer_key]).sample
     ]
     save
   end
