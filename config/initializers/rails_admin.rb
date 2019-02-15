@@ -9,6 +9,8 @@ RailsAdmin.config do |config|
   end
   config.current_user_method(&:current_user)
 
+  config.parent_controller = '::ApplicationController'
+
   RailsAdmin.config do |config|
     config.authorize_with do
       redirect_to main_app.root_path unless current_user.is_admin?
