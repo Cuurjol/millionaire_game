@@ -9,13 +9,11 @@ class GamesController < ApplicationController
   end
 
   def create
-    begin
-      @game = Game.create_game_for_user!(current_user)
-      redirect_to(game_path(@game), notice: I18n.t('controllers.games.game_created', created_at: @game.created_at))
-    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => ex
-      Rails.logger.error("Error creating game for user #{current_user.id}, msg = #{ex}. #{ex.backtrace}")
-      redirect_to(:back, alert: I18n.t('controllers.games.game_not_created'))
-    end
+    @game = Game.create_game_for_user!(current_user)
+    redirect_to(game_path(@game), notice: I18n.t('controllers.games.game_created', created_at: @game.created_at))
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => ex
+    Rails.logger.error("Error creating game for user #{current_user.id}, msg = #{ex}. #{ex.backtrace}")
+    redirect_back(fallback_location: root_path, alert: I18n.t('controllers.games.game_not_created'))
   end
 
   def answer
